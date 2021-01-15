@@ -2,8 +2,21 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 var nodeURL = require('url')
 const requestImageSize = require('request-image-size')
+const readline = require('readline')
 
-const url = 'https://forum.awd.ru/viewtopic.php?f=1011&t=165935'
+let url = ''
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  rl.question('Enter a website ', (answer) => {
+    console.log(`Initiating image extraction from: ${answer}`)
+    url = answer
+    getImg()
+  
+    rl.close();
+  });
 let imgArr = []
 let loadURL = (resp) => {
     const html = resp.data
@@ -36,5 +49,4 @@ let getImg = async () => {
         .catch(err => console.error(err));
     })
 }
-getImg()
 
